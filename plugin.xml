@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	id="com.lyonbros.securecache"
+	version="0.1.0">
+	<name>SecureCache</name>
+	<description>A secure caching service for storing sensitive information passed the lifetime of an app</description>
+	<license>MIT</license>
+	<keywords>cache,service,secure</keywords>
+
+	<engines>
+		<engine name="cordova" version=">=3.0.0" />
+	</engines>
+
+	<js-module src="www/cache.js" name="securecache">
+		<clobbers target="cordova.securecache" />
+	</js-module>
+
+	<platform name="android">
+		<config-file target="res/xml/config.xml" parent="/widget">
+			<feature name="SecureCache">
+				<param name="android-package" value="com.lyonbros.securecache.SecureCachePlugin" />
+				<param name="onload" value="true" />
+			</feature>
+		</config-file>
+
+		<config-file target="AndroidManifest.xml" parent="/manifest">
+			<permission
+				android:name="com.lyonbros.securecache.ACCESS_SECRETS"
+				android:label="Access to SecureCache's data"
+				android:protectionLevel="signature" />
+			<uses-permission android:name="com.lyonbros.securecache.ACCESS_SECRETS" />
+		</config-file>
+		<config-file target="AndroidManifest.xml" parent="/manifest/application">
+			<service
+				android:enabled="true"
+				android:exported="false"
+				android:name="com.lyonbros.securecache.SecureCacheService" />
+		</config-file>
+
+		<source-file src="/src/android/SecureCachePlugin.java" target-dir="src/com/lyonbros/securecache/" />
+		<source-file src="/src/android/SecureCacheService.java" target-dir="src/com/lyonbros/securecache/" />
+	</platform>
+</plugin>
