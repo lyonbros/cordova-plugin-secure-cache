@@ -5,9 +5,8 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.util.Log;
+import android.os;
 import android.R;
-
-import com.lyonbros.securecache.R;
 
 public class SecureCacheService extends Service
 {
@@ -18,6 +17,12 @@ public class SecureCacheService extends Service
 	private String notificationTitle = "App Service";
 	private String notificationText = "Running";
 	private String cache;
+
+	@Override
+	public IBinder onBind(Intent intent)
+	{
+		return null;
+	}
 
 	@Override
 	public void onCreate()
@@ -95,10 +100,7 @@ public class SecureCacheService extends Service
 
 	private void foreground()
 	{
-		Notification notification = getActivityNotification();
-		Intent notificationIntent = new Intent(this, MainActivity.class);
-		PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
-		notification.setLatestEventInfo(this, getText(R.string.notification_title), getText(R.string.notification_message), pendingIntent);
+		Notification notification = getActivityNotification(notificationTitle, notificationText);
 		startForeground(ONGOING_NOTIFICATION_ID, notification);
 		Log.i(TAG, "SecureCacheService: start foreground");
 	}
