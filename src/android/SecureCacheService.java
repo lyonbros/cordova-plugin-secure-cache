@@ -1,7 +1,5 @@
 package com.lyonbros.securecache;
 
-import java.util.Hashtable;
-
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
