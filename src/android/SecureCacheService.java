@@ -14,8 +14,6 @@ public class SecureCacheService extends Service
 	public static final String RECEIVE_CACHE = "com.lyonbros.securecache.RECEIVE_CACHE";
 	private static final String TAG = "MyActivity";
 	private static final int ONGOING_NOTIFICATION_ID = 1;
-	private String notificationTitle = "App Service";
-	private String notificationText = "Running";
 	private String cache;
 
 	@Override
@@ -42,13 +40,20 @@ public class SecureCacheService extends Service
 			cache = data;
 			respond("true");
 		}
+		else if(action.equals("wipe"))
+		{
+			cache = null;
+			respond("true");
+		}
 		else if(action.equals("get"))
 		{
 			respond(cache);
 		}
 		else if(action.equals("foreground"))
 		{
-			foreground();
+			String title = intent.getStringExtra("title");
+			String text = intent.getStringExtra("text");
+			foreground(title, text);
 			respond("true");
 		}
 		else if(action.equals("unforeground"))
@@ -76,16 +81,15 @@ public class SecureCacheService extends Service
 
 	private Notification getActivityNotification(String title, String text)
 	{
-		//Build a Notification required for running service in foreground.
 		Intent main = getApplicationContext().getPackageManager().getLaunchIntentForPackage(getApplicationContext().getPackageName());
 		main.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 		PendingIntent pendingIntent = PendingIntent.getActivity(this, 1000, main,  PendingIntent.FLAG_UPDATE_CURRENT);
 
-		int icon = R.drawable.star_big_on;
-		int normalIcon = getResources().getIdentifier("icon", "drawable", getPackageName());
-		int notificationIcon = getResources().getIdentifier("notification", "drawable", getPackageName());         
-		if(notificationIcon != 0) icon = notificationIcon;
-		else if(normalIcon != 0) icon = normalIcon;
+		int icon = R.drawable.icon;
+		//int normalIcon = getResources().getIdentifier("icon", "drawable", getPackageName());
+		//int notificationIcon = getResources().getIdentifier("notification", "drawable", getPackageName());         
+		//if(notificationIcon != 0) icon = notificationIcon;
+		//else if(normalIcon != 0) icon = normalIcon;
 
 		Notification.Builder builder = new Notification.Builder(this);
 		builder.setContentTitle(title);
@@ -98,9 +102,9 @@ public class SecureCacheService extends Service
 		return notification;
 	}
 
-	private void foreground()
+	private void foreground(String title, String text)
 	{
-		Notification notification = getActivityNotification(notificationTitle, notificationText);
+		Notification notification = getActivityNotification(title, text);
 		startForeground(ONGOING_NOTIFICATION_ID, notification);
 		Log.i(TAG, "SecureCacheService: start foreground");
 	}
