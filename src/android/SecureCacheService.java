@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.util.Log;
+import android.R;
 
 import com.lyonbros.securecache.R;
 
@@ -14,6 +15,8 @@ public class SecureCacheService extends Service
 	public static final String RECEIVE_CACHE = "com.lyonbros.securecache.RECEIVE_CACHE";
 	private static final String TAG = "MyActivity";
 	private static final int ONGOING_NOTIFICATION_ID = 1;
+	private String notificationTitle = "App Service";
+	private String notificationText = "Running";
 	private String cache;
 
 	@Override
@@ -66,9 +69,33 @@ public class SecureCacheService extends Service
 		sendBroadcast(intent, CACHE_PERMISSION);
 	}
 
+	private Notification getActivityNotification(String title, String text)
+	{
+		//Build a Notification required for running service in foreground.
+		Intent main = getApplicationContext().getPackageManager().getLaunchIntentForPackage(getApplicationContext().getPackageName());
+		main.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+		PendingIntent pendingIntent = PendingIntent.getActivity(this, 1000, main,  PendingIntent.FLAG_UPDATE_CURRENT);
+
+		int icon = R.drawable.star_big_on;
+		int normalIcon = getResources().getIdentifier("icon", "drawable", getPackageName());
+		int notificationIcon = getResources().getIdentifier("notification", "drawable", getPackageName());         
+		if(notificationIcon != 0) icon = notificationIcon;
+		else if(normalIcon != 0) icon = normalIcon;
+
+		Notification.Builder builder = new Notification.Builder(this);
+		builder.setContentTitle(title);
+		builder.setContentText(text);
+		builder.setSmallIcon(icon);
+		builder.setContentIntent(pendingIntent);        
+		Notification notification;
+		notification = builder.build();
+		notification.flags |= Notification.FLAG_ONGOING_EVENT | Notification.FLAG_FOREGROUND_SERVICE | Notification.FLAG_NO_CLEAR;
+		return notification;
+	}
+
 	private void foreground()
 	{
-		Notification notification = new Notification(R.drawable.icon, getText(R.string.ticker_text), System.currentTimeMillis());
+		Notification notification = getActivityNotification();
 		Intent notificationIntent = new Intent(this, MainActivity.class);
 		PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
 		notification.setLatestEventInfo(this, getText(R.string.notification_title), getText(R.string.notification_message), pendingIntent);
