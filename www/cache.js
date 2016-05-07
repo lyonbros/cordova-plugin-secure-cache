@@ -1,7 +1,7 @@
 var SecureCache = (function() {
 	var exec = function(action, cb, args)
 	{
-		cordova.exec(cb, function(err) { cb(err); }, 'SecureCache', action, args);
+		cordova.exec(function(res) { cb(null, res); }, function(err) { cb(err, null); }, 'SecureCache', action, args);
 	};
 
 	this.foreground = function(title, text, cb)
