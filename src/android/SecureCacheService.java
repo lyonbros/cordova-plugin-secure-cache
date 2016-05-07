@@ -5,7 +5,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.util.Log;
-import android.os;
+import android.os.IBinder;
 import android.R;
 
 public class SecureCacheService extends Service
