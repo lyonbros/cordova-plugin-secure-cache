@@ -6,30 +6,28 @@ import android.app.Service;
 import android.content.Intent;
 import android.util.Log;
 
+import com.lyonbros.securecache.R;
+
 public class SecureCacheService extends Service
 {
 	public static final String CACHE_PERMISSION = "com.lyonbros.securecache.ACCESS_SECRETS";
 	public static final String RECEIVE_CACHE = "com.lyonbros.securecache.RECEIVE_CACHE";
+	private static final String TAG = "MyActivity";
+	private static final int ONGOING_NOTIFICATION_ID = 1;
 	private String cache;
-
-	@Override
-	public IBinder onBind(Intent intent)
-	{
-		return null;
-	}
 
 	@Override
 	public void onCreate()
 	{
 		super.onCreate();
-		Log.i("SecureCacheService: created");
+		Log.i(TAG, "SecureCacheService: created");
 	}
 
 	@Override
-	public int onStartCommand(Intent intent, int flags, in startid)
+	public int onStartCommand(Intent intent, int flags, int startid)
 	{
 		String action = intent.getStringExtra("action");
-		Log.i("SecureCacheService: action: "+action);
+		Log.i(TAG, "SecureCacheService: action: "+action);
 		if(action.equals("set"))
 		{
 			String data = intent.getStringExtra("data");
@@ -57,7 +55,7 @@ public class SecureCacheService extends Service
 	public void onDestroy()
 	{
 		super.onDestroy();
-		Log.i("SecureCacheService: destroyed");
+		Log.i(TAG, "SecureCacheService: destroyed");
 	}
 
 	private void respond(String msg)
@@ -65,7 +63,7 @@ public class SecureCacheService extends Service
 		Intent intent = new Intent(RECEIVE_CACHE);
 		intent.putExtra("data", cache);
 		intent.setPackage(getApplicationContext().getPackageName());
-		LocalBroadcastManager.getInstance(this).sendBroadcast(intent, CACHE_PERMISSION);
+		sendBroadcast(intent, CACHE_PERMISSION);
 	}
 
 	private void foreground()
@@ -75,13 +73,13 @@ public class SecureCacheService extends Service
 		PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
 		notification.setLatestEventInfo(this, getText(R.string.notification_title), getText(R.string.notification_message), pendingIntent);
 		startForeground(ONGOING_NOTIFICATION_ID, notification);
-		Log.i("SecureCacheService: start foreground");
+		Log.i(TAG, "SecureCacheService: start foreground");
 	}
 
 	private void unforeground()
 	{
 		stopForeground(true);
-		Log.i("SecureCacheService: stop foreground");
+		Log.i(TAG, "SecureCacheService: stop foreground");
 	}
 }
 

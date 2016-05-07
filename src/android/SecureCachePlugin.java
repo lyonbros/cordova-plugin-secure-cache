@@ -4,6 +4,7 @@ import org.apache.cordova.*;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -17,16 +18,19 @@ public class SecureCachePlugin extends CordovaPlugin
 	{
 		super.initialize(cordova, webView);
 
-		LocalBroadcastManager manager = LocalBroadcastManager.getInstance(this);
+		Context context = cordova.getActivity().getApplicationContext();
+
+		//LocalBroadcastManager manager = LocalBroadcastManager.getInstance(this);
 		IntentFilter filter = new IntentFilter();
-		intentFilter.addAction(SecureCacheService.RECEIVE_CACHE);
-		manager.registerReceiver(bReceiver, intentFilter);
+		filter.addAction(SecureCacheService.RECEIVE_CACHE);
+		context.registerReceiver(bReceiver, filter);
 	}
 
 	private void comm(Intent intent, CallbackContext callback)
 	{
+		Context context = this.cordova.getActivity().getApplicationContext();
 		cb = callback;
-		startService(intent);
+		context.startService(intent);
 	}
 
 	private BroadcastReceiver bReceiver = new BroadcastReceiver()
@@ -44,7 +48,7 @@ public class SecureCachePlugin extends CordovaPlugin
 
 	private void result(String data)
 	{
-		if(!cb) return;
+		if(cb == null) return;
 		cb.success(data);
 		cb = null;
 	}
@@ -52,13 +56,14 @@ public class SecureCachePlugin extends CordovaPlugin
 	@Override
 	public boolean execute(String action, JSONArray args, CallbackContext callback) throws JSONException
 	{
-		if(cb)
+		if(cb != null)
 		{
 			callback.error("in_use");
 			return false;
 		}
 
-		Intent intent = new Intent(this, SecureCacheService.class);
+		Context context = this.cordova.getActivity().getApplicationContext();
+		Intent intent = new Intent(context, SecureCacheService.class);
 		intent.putExtra("action", action);
 		if(action.equals("set"))
 		{
