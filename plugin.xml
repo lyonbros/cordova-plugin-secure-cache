@@ -38,7 +38,7 @@
 				android:name="com.lyonbros.securecache.SecureCacheService" />
 		</config-file>
 
-		<source-file src="/src/android/SecureCachePlugin.java" target-dir="src/com/lyonbros/securecache/" />
-		<source-file src="/src/android/SecureCacheService.java" target-dir="src/com/lyonbros/securecache/" />
+		<source-file src="src/android/SecureCachePlugin.java" target-dir="src/com/lyonbros/securecache/" />
+		<source-file src="src/android/SecureCacheService.java" target-dir="src/com/lyonbros/securecache/" />
 	</platform>
 </plugin>
