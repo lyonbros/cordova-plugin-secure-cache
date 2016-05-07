@@ -41,7 +41,7 @@ public class SecureCachePlugin extends CordovaPlugin
 				result(data);
 			}
 		}
-	}
+	};
 
 	private void result(String data)
 	{
