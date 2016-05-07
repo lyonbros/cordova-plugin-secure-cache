@@ -13,7 +13,7 @@
 	</engines>
 
 	<js-module src="www/cache.js" name="securecache">
-		<clobbers target="cordova.securecache" />
+		<clobbers target="SecureCache" />
 	</js-module>
 
 	<platform name="android">
