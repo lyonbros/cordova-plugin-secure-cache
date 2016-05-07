@@ -1,12 +1,12 @@
-window.SecureCache = new (function() {
+var SecureCache = (function() {
 	var exec = function(action, cb, args)
 	{
-		cordova.exec(cb, function(err) { cb(err); }, 'SimpleCache', action, args);
+		cordova.exec(cb, function(err) { cb(err); }, 'SecureCache', action, args);
 	};
 
-	this.foreground = function(cb)
+	this.foreground = function(title, text, cb)
 	{
-		exec('foreground', cb, []);
+		exec('foreground', cb, [title, text]);
 	};
 
 	this.unforeground = function(cb)
@@ -24,4 +24,6 @@ window.SecureCache = new (function() {
 		exec('get', cb, []);
 	};
 });
+
+module.exports = new SecureCache();
 
