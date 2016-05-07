@@ -23,6 +23,11 @@ var SecureCache = (function() {
 	{
 		exec('get', cb, []);
 	};
+
+	this.stop = function(cb)
+	{
+		exec('stop', cb, []);
+	}
 });
 
 module.exports = new SecureCache();

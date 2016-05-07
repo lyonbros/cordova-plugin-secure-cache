@@ -78,7 +78,7 @@ public class SecureCachePlugin extends CordovaPlugin
 			comm(intent, callback);
 			return true;
 		}
-		else if(action.equals("wipe") || action.equals("get") || action.equals("unforeground"))
+		else if(action.equals("wipe") || action.equals("get") || action.equals("unforeground") || action.equals("stop"))
 		{
 			comm(intent, callback);
 			return true;

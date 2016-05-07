@@ -61,6 +61,11 @@ public class SecureCacheService extends Service
 			unforeground();
 			respond("true");
 		}
+		else if(action.equals("stop"))
+		{
+			stopSelf();
+			respond("true");
+		}
 		return START_STICKY;
 	}
 
@@ -83,19 +88,19 @@ public class SecureCacheService extends Service
 	{
 		Intent main = getApplicationContext().getPackageManager().getLaunchIntentForPackage(getApplicationContext().getPackageName());
 		main.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-		PendingIntent pendingIntent = PendingIntent.getActivity(this, 1000, main,  PendingIntent.FLAG_UPDATE_CURRENT);
+		PendingIntent pending = PendingIntent.getActivity(this, 6969, main, PendingIntent.FLAG_UPDATE_CURRENT);
 
 		int icon = R.drawable.star_big_on;
-		int normalIcon = getResources().getIdentifier("icon", "drawable", getPackageName());
-		int notificationIcon = getResources().getIdentifier("notification", "drawable", getPackageName());         
-		if(notificationIcon != 0) icon = notificationIcon;
-		else if(normalIcon != 0) icon = normalIcon;
+		int notify_icon = getResources().getIdentifier("notification", "drawable", getPackageName());
+		int app_icon = getResources().getIdentifier("icon", "drawable", getPackageName());
+		if(notify_icon != 0) icon = notify_icon;
+		else if(app_icon != 0) icon = app_icon;
 
 		Notification.Builder builder = new Notification.Builder(this);
 		builder.setContentTitle(title);
 		builder.setContentText(text);
 		builder.setSmallIcon(icon);
-		builder.setContentIntent(pendingIntent);        
+		builder.setContentIntent(pending);
 		Notification notification;
 		notification = builder.build();
 		notification.flags |= Notification.FLAG_ONGOING_EVENT | Notification.FLAG_FOREGROUND_SERVICE | Notification.FLAG_NO_CLEAR;
