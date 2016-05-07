@@ -1,7 +1,6 @@
 package com.lyonbros.securecache;
 
-import org.apache.cordova.CordovaPlugin;
-import org.apache.cordova.CallbackContext;
+import org.apache.cordova.*;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
