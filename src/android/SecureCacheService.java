@@ -85,11 +85,11 @@ public class SecureCacheService extends Service
 		main.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 		PendingIntent pendingIntent = PendingIntent.getActivity(this, 1000, main,  PendingIntent.FLAG_UPDATE_CURRENT);
 
-		int icon = R.drawable.icon;
-		//int normalIcon = getResources().getIdentifier("icon", "drawable", getPackageName());
-		//int notificationIcon = getResources().getIdentifier("notification", "drawable", getPackageName());         
-		//if(notificationIcon != 0) icon = notificationIcon;
-		//else if(normalIcon != 0) icon = normalIcon;
+		int icon = R.drawable.star_big_on;
+		int normalIcon = getResources().getIdentifier("icon", "drawable", getPackageName());
+		int notificationIcon = getResources().getIdentifier("notification", "drawable", getPackageName());         
+		if(notificationIcon != 0) icon = notificationIcon;
+		else if(normalIcon != 0) icon = normalIcon;
 
 		Notification.Builder builder = new Notification.Builder(this);
 		builder.setContentTitle(title);
