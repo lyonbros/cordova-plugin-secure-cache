@@ -19,6 +19,11 @@ var SecureCache = (function() {
 		exec('set', cb, [data]);
 	};
 
+	this.wipe = function(cb)
+	{
+		exec('wipe', cb, []);
+	}
+
 	this.get = function(cb)
 	{
 		exec('get', cb, []);
