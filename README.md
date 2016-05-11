@@ -10,6 +10,16 @@ This gives your app a way to store secrets, securely, such that even if your app
 is killed by the Android system, when the user opens it up again, the app can
 pull out the cached data from the service (which lives on past the app).
 
+Ok, so why do I want this? Let's say you have an app that generates a
+cryptographic key from a user's password. If your app is killed, then unless you
+are making the *horrible mistake* of storing the user's key on-disk, your user
+will have to log in again. Users hate nothing more than logging in again, trust
+me. They will tell you about it all the time.
+
+SecureCache lets you store their key in-memory such that only apps built by you
+can access the key data. It doesn't have to be a key, it can be any data that
+can be serialized as a string. Your imagination is the only limit!
+
 ## Before you begin
 
 The cache service is not started automatically. **You must start it yourself**.
