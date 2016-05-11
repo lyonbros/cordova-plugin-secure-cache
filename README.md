@@ -13,12 +13,21 @@ pull out the cached data from the service (which lives on past the app).
 ## Before you begin
 
 The cache service is not started automatically. **You must start it yourself**.
-You start it by running any command. Any command at all (besides `stop` which
-will start and then immediately stop the service).
+You start it by running any command. Any command at all. Even the
+`SecureCache.stop` command will start the service (however it will then
+immediately stop it so this is not a recommended way to start it).
+
+Once started, the service will continue running until either it's stopped via
+the `SecureCache.stop()` command or Android decides your service is not worth
+keeping around. You can `foreground` your service to ensure it will only be
+killed as a last resort (cut my life into pieces...).
 
 ## API
 
-All functions live under the `SecureCache` namespace. All functions take a `cb`
+All functions live under the `SecureCache` namespace. All functions will start
+the service if it is not already running.
+
+All functions take a `cb`
 argument, which is a function that follows the convention:
 
 ```javascript
