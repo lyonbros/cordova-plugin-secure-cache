@@ -1,10 +1,10 @@
 # cordova-plugin-secure-cache
 
 This is a Cordova plugin (**currently Android only**) that provides a service
-for securely storing a single blog of data. The service is set up to only store
-the data you store in it using memory only (never stored to disk). It also sets
-up permissions into your manifest that make it so only the app (or other apps
-signed with your key) can communicate with the cache service.
+for securely storing a single blob of string data. The service is set up to only
+store the data in-memory (never stored to disk). It also sets up permissions
+into your manifest that make it so only the app (or other apps signed with your
+key) can communicate with the cache service.
 
 This gives your app a way to store secrets, securely, such that even if your app
 is killed by the Android system, when the user opens it up again, the app can
@@ -36,6 +36,10 @@ item opens your app. You can customize the `title` and the `text` of the
 notifcation as well (both strings).
 
 This is useful for letting the user know that you're running a service.
+
+Also, running your service in the foreground is a good way to keep the cache
+service from getting killed by the android system. Foreground services are
+generally the last ones to be killed.
 
 ### `SecureCache.unforeground(cb)`
 
