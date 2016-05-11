@@ -13,8 +13,8 @@ pull out the cached data from the service (which lives on past the app).
 Ok, so why do I want this? Let's say you have an app that generates a
 cryptographic key from a user's password. If your app is killed, then unless you
 are making the *horrible mistake* of storing the user's key on-disk, your user
-will have to log in again. Users hate nothing more than logging in again, trust
-me. They will tell you about it all the time.
+will have to log in again. Users hate nothing more than logging in again. Trust
+me. (Android users *HATE* this one app developer!!)
 
 SecureCache lets you store their key in-memory such that only apps built by you
 can access the key data. It doesn't have to be a key, it can be any data that
@@ -105,7 +105,7 @@ from the cache! All is not lost!
 SecureCache.get(function(err, res) {
     if(err) return console.error('oh no: ', err);
     var data = JSON.parse(res);
-    console.log('cool, got our key: ', data.secret_key);
+    console.log('cool, got our key! why not log it out so it is not secure anymore? ', data.secret_key);
     MyApp.logUserIn(data.secret_key);
 });
 ```
