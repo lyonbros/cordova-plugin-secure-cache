@@ -8,9 +8,9 @@
 	<license>MIT</license>
 	<keywords>cache,service,secure</keywords>
 
-	<engines>
+	<!--<engines>
 		<engine name="cordova" version=">=3.0.0" />
-	</engines>
+	</engines>-->
 
 	<js-module src="www/cache.js" name="securecache">
 		<clobbers target="SecureCache" />
