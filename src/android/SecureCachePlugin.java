@@ -65,19 +65,14 @@ public class SecureCachePlugin extends CordovaPlugin
 		Context context = this.cordova.getActivity().getApplicationContext();
 		Intent intent = new Intent(context, SecureCacheService.class);
 		intent.putExtra("action", action);
-		if(action.equals("set"))
-		{
+		if(action.equals("set")) {
 			intent.putExtra("data", args.getString(0));
 			comm(intent, callback);
 			return true;
-		}
-		else if(action.equals("wipe") || action.equals("get") || action.equals("stop"))
-		{
+		} else if(action.equals("start") || action.equals("wipe") || action.equals("get") || action.equals("stop")) {
 			comm(intent, callback);
 			return true;
-		}
-		else
-		{
+		} else {
 			cb = null;
 		}
 		return false;

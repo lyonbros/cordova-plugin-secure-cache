@@ -40,23 +40,19 @@ public class SecureCacheService extends Service
 			return START_STICKY;
 		}
 		Log.i(TAG, "SecureCacheService: action: "+action);
-		if(action.equals("set"))
-		{
+		if(action.equals("start")) {
+			// hey, girl heyy
+			respond("true");
+		} else if(action.equals("set")) {
 			String data = intent.getStringExtra("data");
 			cache = data;
 			respond("true");
-		}
-		else if(action.equals("wipe"))
-		{
+		} else if(action.equals("wipe")) {
 			cache = null;
 			respond("true");
-		}
-		else if(action.equals("get"))
-		{
+		} else if(action.equals("get")) {
 			respond(cache);
-		}
-		else if(action.equals("stop"))
-		{
+		} else if(action.equals("stop")) {
 			stopSelf();
 			respond("true");
 		}
