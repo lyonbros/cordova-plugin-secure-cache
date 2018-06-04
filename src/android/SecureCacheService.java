@@ -32,10 +32,13 @@ public class SecureCacheService extends Service
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startid)
 	{
-		if(intent.isNull()) {
+		if(intent == null) {
 			return START_STICKY;
 		}
 		String action = intent.getStringExtra("action");
+		if(action == null) {
+			return START_STICKY;
+		}
 		Log.i(TAG, "SecureCacheService: action: "+action);
 		if(action.equals("set"))
 		{
@@ -51,18 +54,6 @@ public class SecureCacheService extends Service
 		else if(action.equals("get"))
 		{
 			respond(cache);
-		}
-		else if(action.equals("foreground"))
-		{
-			String title = intent.getStringExtra("title");
-			String text = intent.getStringExtra("text");
-			foreground(title, text);
-			respond("true");
-		}
-		else if(action.equals("unforeground"))
-		{
-			unforeground();
-			respond("true");
 		}
 		else if(action.equals("stop"))
 		{
