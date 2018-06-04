@@ -4,16 +4,6 @@ var SecureCache = (function() {
 		cordova.exec(function(res) { cb(null, res); }, function(err) { cb(err, null); }, 'SecureCache', action, args);
 	};
 
-	this.foreground = function(title, text, cb)
-	{
-		exec('foreground', cb, [title, text]);
-	};
-
-	this.unforeground = function(cb)
-	{
-		exec('unforeground', cb, []);
-	};
-
 	this.set = function(data, cb)
 	{
 		exec('set', cb, [data]);
