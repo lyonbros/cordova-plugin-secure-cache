@@ -26,7 +26,7 @@ public class SecureCacheService extends Service
 	public void onCreate()
 	{
 		super.onCreate();
-		Log.i(TAG, "SecureCacheService: created");
+		Log.i(TAG, "created");
 	}
 
 	@Override
@@ -39,20 +39,25 @@ public class SecureCacheService extends Service
 		if(action == null) {
 			return START_STICKY;
 		}
-		Log.i(TAG, "SecureCacheService: action: "+action);
+		Log.i(TAG, "action: "+action);
 		if(action.equals("start")) {
 			// hey, girl heyy
+			Log.i(TAG, "start");
 			respond("true");
 		} else if(action.equals("set")) {
 			String data = intent.getStringExtra("data");
+			Log.i(TAG, "set: "+(data || "").length());
 			cache = data;
 			respond("true");
 		} else if(action.equals("wipe")) {
+			Log.i(TAG, "wipe");
 			cache = null;
 			respond("true");
 		} else if(action.equals("get")) {
+			Log.i(TAG, "get: "+(cache || "").length());
 			respond(cache);
 		} else if(action.equals("stop")) {
+			Log.i(TAG, "stop");
 			stopSelf();
 			respond("true");
 		}
@@ -63,7 +68,7 @@ public class SecureCacheService extends Service
 	public void onDestroy()
 	{
 		super.onDestroy();
-		Log.i(TAG, "SecureCacheService: destroyed");
+		Log.i(TAG, "destroyed");
 	}
 
 	private void respond(String msg)
