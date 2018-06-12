@@ -46,7 +46,7 @@ public class SecureCacheService extends Service
 			respond("true");
 		} else if(action.equals("set")) {
 			String data = intent.getStringExtra("data");
-			Log.i(TAG, "set: "+(data ? data : "").length());
+			Log.i(TAG, "set: "+(data == null ? "" : data).length());
 			cache = data;
 			respond("true");
 		} else if(action.equals("wipe")) {
@@ -54,7 +54,7 @@ public class SecureCacheService extends Service
 			cache = null;
 			respond("true");
 		} else if(action.equals("get")) {
-			Log.i(TAG, "get: "+(cache ? cache : "").length());
+			Log.i(TAG, "get: "+(cache == null ? "" : cache).length());
 			respond(cache);
 		} else if(action.equals("stop")) {
 			Log.i(TAG, "stop");
